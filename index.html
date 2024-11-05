@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVanguard Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #232323;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .site-title {
+            font-size: 2.5rem;
+            color: #f7f6f3;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #ebebeb;
+            font-size: 1.2rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .blog-post {
+            background: white;
+            border: solid 1px #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .post-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .read-more:hover {
+            background-color: #34495e;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: 2rem auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #2c3e50;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body {
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .modal-body h2 {
+            color: #2c3e50;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .modal-body ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                margin: 1rem;
+                width: calc(100% - 2rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="site-title">BLOG</h1>
+        <p class="subtitle">Yeily Alvarez Bolaño</p>
+    </header>
+
+    <main>
+        <div class="blog-grid">
+            <article class="blog-post">
+                <img src="domotica.jfif" alt="Domótica" class="post-image">
+                <div class="post-content">
+                    <h2 class="post-title">Domótica: El Futuro del Hogar Inteligente</h2>
+                    <p class="post-excerpt">
+                        La domótica es la tecnología aplicada al control y la automatización de la vivienda. 
+                        Permite una gestión eficiente del uso de la energía, aporta seguridad y confort, 
+                        y facilita la comunicación entre el usuario y los sistemas.
+                    </p>
+                    <button class="read-more" onclick="openModal('domotica')">Leer más</button>
+                </div>
+            </article>
+
+            <article class="blog-post">
+                <img src="robotics.webp" alt="Robótica" class="post-image">
+                <div class="post-content">
+                    <h2 class="post-title">Robótica: La Revolución de las Máquinas</h2>
+                    <p class="post-excerpt">
+                        La robótica es la rama de la ingeniería que combina múltiples disciplinas para 
+                        diseñar, construir y programar robots. Estos sistemas autónomos o semiautónomos 
+                        están revolucionando la industria.
+                    </p>
+                    <button class="read-more" onclick="openModal('robotica')">Leer más</button>
+                </div>
+            </article>
+
+            <article class="blog-post">
+                <img src="mec.jfif" alt="Mecatrónica" class="post-image">
+                <div class="post-content">
+                    <h2 class="post-title">Mecatrónica: La Integración Perfecta</h2>
+                    <p class="post-excerpt">
+                        La mecatrónica es la sinergia de la mecánica, electrónica, control y computación. 
+                        Esta disciplina permite el diseño de productos y procesos inteligentes.
+                    </p>
+                    <button class="read-more" onclick="openModal('mecatronica')">Leer más</button>
+                </div>
+            </article>
+
+            <article class="blog-post">
+                <img src="iot.jfif" alt="Internet de las Cosas" class="post-image">
+                <div class="post-content">
+                    <h2 class="post-title">IoT: Conectando el Mundo</h2>
+                    <p class="post-excerpt">
+                        El Internet de las Cosas (IoT) es la red de objetos físicos equipados con 
+                        sensores, software y otras tecnologías que permiten la conexión e intercambio 
+                        de datos.
+                    </p>
+                    <button class="read-more" onclick="openModal('iot')">Leer más</button>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Modales -->
+    <div id="modal-domotica" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('domotica')">&times;</span>
+            <h2 class="modal-title">Domótica: El Futuro del Hogar Inteligente</h2>
+            <div class="modal-body">
+                <h2>¿Qué es la Domótica?</h2>
+                <p>La domótica es la tecnología aplicada al control y la automatización inteligente de la vivienda, que permite una gestión eficiente del uso de la energía, aporta seguridad y confort, y facilita la comunicación entre el usuario y los sistemas.</p>
+
+                <h2>Componentes Principales</h2>
+                <ul>
+                    <li><strong>Controladores:</strong> El cerebro del sistema domótico que gestiona todos los dispositivos conectados.</li>
+                    <li><strong>Actuadores:</strong> Dispositivos que ejecutan las órdenes del controlador (persianas, luces, etc.).</li>
+                    <li><strong>Sensores:</strong> Detectan cambios en el entorno (movimiento, temperatura, luz, etc.).</li>
+                    <li><strong>Interface:</strong> Permite al usuario interactuar con el sistema.</li>
+                </ul>
+
+                <h2>Beneficios de la Domótica</h2>
+                <ul>
+                    <li>Ahorro energético significativo</li>
+                    <li>Mayor seguridad y tranquilidad</li>
+                    <li>Mejora en la calidad de vida</li>
+                    <li>Incremento del valor de la propiedad</li>
+                    <li>Adaptabilidad a necesidades específicas</li>
+                </ul>
+
+                <h2>Aplicaciones Prácticas</h2>
+                <p>Las aplicaciones de la domótica son muy variadas y pueden incluir:</p>
+                <ul>
+                    <li>Control automático de iluminación</li>
+                    <li>Gestión de climatización</li>
+                    <li>Sistemas de seguridad y videovigilancia</li>
+                    <li>Control de accesos</li>
+                    <li>Automatización de persianas y toldos</li>
+                    <li>Gestión de electrodomésticos</li>
+                    <li>Control por voz mediante asistentes virtuales</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-robotica" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('robotica')">&times;</span>
+            <h2 class="modal-title">Robótica: La Revolución de las Máquinas</h2>
+            <div class="modal-body">
+                <h2>¿Qué es la Robótica?</h2>
+                <p>La robótica es una rama de la ingeniería que involucra el diseño, construcción, operación y uso de robots. Es una disciplina que integra múltiples campos como la mecánica, la electrónica, la informática y la inteligencia artificial.</p>
+
+                <h2>Tipos de Robots</h2>
+                <ul>
+                    <li><strong>Robots Industriales:</strong> Utilizados en manufactura y producción</li>
+                    <li><strong>Robots de Servicio:</strong> Para asistencia y tareas domésticas</li>
+                    <li><strong>Robots Médicos:</strong> Utilizados en cirugía y rehabilitación</li>
+                    <li><strong>Robots Educativos:</strong> Para enseñanza y aprendizaje</li>
+                    <li><strong>Robots Colaborativos:</strong> Diseñados para trabajar junto a humanos</li>
+                </ul>
+
+                <h2>Aplicaciones Actuales</h2>
+                <ul>
+                    <li>Manufactura automatizada</li>
+                    <li>Cirugía robótica</li>
+                    <li>Exploración espacial</li>
+                    <li>Agricultura de precisión</li>
+                    <li>Logística y almacenamiento</li>
+                    <li>Asistencia a personas mayores o con discapacidad</li>
+                </ul>
+
+                <h2>Impacto en la Sociedad</h2>
+                <p>La robótica está transformando numerosos aspectos de nuestra sociedad:</p>
+                <ul>
+                    <li>Aumento de la productividad industrial</li>
+                    <li>Mejora en la precisión de procedimientos médicos</li>
+                    <li>Reducción de riesgos en trabajos peligrosos</li>
+                    <li>Nuevas oportunidades de empleo en el sector tecnológico</li>
+                    <li>Avances en la investigación científica</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mecatronica" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('mecatronica')">&times;</span>
+            <h2 class="modal-title">Mecatrónica: La Integración Perfecta</h2>
+            <div class="modal-body">
+                <h2>¿Qué es la Mecatrónica?</h2>
+                <p>La mecatrónica es una disciplina que combina la ingeniería mecánica, electrónica, control y computación. Esta sinergia permite el diseño de productos y sistemas más eficientes e inteligentes.</p>
+
+                <h2>Componentes Fundamentales</h2>
+                <ul>
+                    <li><strong>Sistemas Mecánicos:</strong> Diseño y construcción de estructuras</li>
+                    <li><strong>Sistemas Electrónicos:</strong> Circuitos y componentes electrónicos</li>
+                    <li><strong>Sistemas de Control:</strong> Programación y automatización</li>
+                    <li><strong>Sistemas Informáticos:</strong> Software y procesamiento de datos</li>
+                </ul>
+
+                <h2>Aplicaciones Prácticas</h2>
+                <ul>
+                    <li>Sistemas de manufactura automatizada</li>
+                    <li>Robótica industrial y de servicio</li>
+                    <li>Vehículos autónomos</li>
+                    <li>Equipamiento médico avanzado</li>
+                    <li>Sistemas de energía renovable</li>
+                    <li>Electrodomésticos inteligentes</li>
+                </ul>
+
+                <h2>Ventajas de la Integración Mecatrónica</h2>
+                <ul>
+                    <li>Mayor eficiencia operativa</li>
+                    <li>Reducción de costos de producción</li>
+                    <li>Mejora en la precisión de procesos
+                      <li>Mejora en la precisión de procesos</li>
+                    <li>Mayor flexibilidad y adaptabilidad</li>
+                    <li>Integración de sistemas compleja</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-iot" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('iot')">&times;</span>
+            <h2 class="modal-title">Internet de las Cosas (IoT): Conectando el Mundo</h2>
+            <div class="modal-body">
+                <h2>¿Qué es el Internet de las Cosas?</h2>
+                <p>El Internet de las Cosas (IoT) es un sistema de dispositivos interconectados que recopilan y transfieren datos a través de redes inalámbricas sin intervención humana. Esta tecnología está transformando la manera en que interactuamos con nuestro entorno.</p>
+
+                <h2>Componentes Principales</h2>
+                <ul>
+                    <li><strong>Sensores:</strong> Dispositivos que recolectan datos del entorno</li>
+                    <li><strong>Conectividad:</strong> Infraestructura de red para transmisión de datos</li>
+                    <li><strong>Procesamiento de Datos:</strong> Sistemas que analizan la información</li>
+                    <li><strong>Interfaz de Usuario:</strong> Aplicaciones para interacción y control</li>
+                </ul>
+
+                <h2>Aplicaciones del IoT</h2>
+                <ul>
+                    <li>Hogares inteligentes (Smart Homes)</li>
+                    <li>Ciudades inteligentes (Smart Cities)</li>
+                    <li>Industria 4.0</li>
+                    <li>Agricultura de precisión</li>
+                    <li>Monitoreo de salud</li>
+                    <li>Gestión de energía</li>
+                    <li>Logística y transporte inteligente</li>
+                </ul>
+
+                <h2>Beneficios del IoT</h2>
+                <ul>
+                    <li>Automatización de procesos</li>
+                    <li>Optimización de recursos</li>
+                    <li>Mejor toma de decisiones basada en datos</li>
+                    <li>Incremento en la eficiencia operativa</li>
+                    <li>Mejora en la calidad de vida</li>
+                    <li>Reducción de costos operativos</li>
+                </ul>
+
+                <h2>Desafíos y Consideraciones</h2>
+                <ul>
+                    <li>Seguridad y privacidad de datos</li>
+                    <li>Interoperabilidad entre dispositivos</li>
+                    <li>Consumo de energía</li>
+                    <li>Escalabilidad de las soluciones</li>
+                    <li>Mantenimiento y actualización de sistemas</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para abrir el modal
+        function openModal(id) {
+            document.getElementById(`modal-${id}`).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal
+        function closeModal(id) {
+            document.getElementById(`modal-${id}`).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cerrar el modal cuando se hace clic fuera del contenido
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Cerrar modal con la tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.getElementsByClassName('modal');
+                for (let modal of modals) {
+                    modal.style.display = 'none';
+                }
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
